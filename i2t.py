@@ -1,4 +1,5 @@
 # simple image to text script
+#HOW TO USE: enter the file location while executing the script (e.g. "python3 o2t.py image.png")
 import sys
 import pytesseract
 
