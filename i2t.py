@@ -2,9 +2,7 @@
 import sys
 import pytesseract
 
-imagePath = sys.argv[1]
-
 with open("out.txt", "w") as f:
-    f.write(pytesseract.image_to_string(imagePath))
+    f.write(pytesseract.image_to_string(sys.argv[1]))
 
 print("Done!")
