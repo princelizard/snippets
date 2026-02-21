@@ -3,6 +3,10 @@
 import sys
 import pytesseract
 
+if len(sys.argv) < 2:
+    print("use: python3 i2t.py [image file]")
+    sys.exit(1)
+
 with open("out.txt", "w") as f:
     f.write(pytesseract.image_to_string(sys.argv[1]))
 
