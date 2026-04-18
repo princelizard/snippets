@@ -1,0 +1,12 @@
+[package]
+name = "rust-things"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[workspace]
+members = [
+    "colors",
+]
+resolver = "3"
