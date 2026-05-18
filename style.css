@@ -1,0 +1,239 @@
+/* ~/.config/waybar/style.css
+   Dark pill waybar — IBM Plex Mono + Nerd Fonts
+   ─────────────────────────────────────────────── */
+
+@import url("file:///usr/share/fonts/opentype/ibm-plex/IBMPlexMono-Regular.otf");
+
+/* ── Palette ─────────────────────────────────────────── */
+* {
+    --bg:           #0e1015;
+    --bg-pill:      #161a22;
+    --bg-hover:     #1e2330;
+    --bg-active:    #252c3b;
+    --border:       #252c3b;
+    --fg:           #c8cdd8;
+    --fg-dim:       #5a6175;
+    --accent:       #7eb8f7;   /* cool blue  */
+    --accent2:      #a5c9f5;   /* lighter    */
+    --green:        #7ec99a;
+    --yellow:       #e5c97e;
+    --orange:       #e5a07e;
+    --red:          #e5737e;
+    --purple:       #b48ef5;
+
+    font-family: "IBM Plex Mono", "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono", monospace;
+    font-size: 12px;
+    font-weight: 400;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+/* ── Window / Root ───────────────────────────────────── */
+window#waybar {
+    background: transparent;
+    color: var(--fg);
+}
+
+/* ── Pill wrapper that each section sits inside ──────── */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: var(--bg-pill);
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    padding: 0 6px;
+    margin: 4px 0;
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ── Generic module spacing ──────────────────────────── */
+widget > * {
+    padding: 0 2px;
+}
+
+/* ── Workspaces ──────────────────────────────────────── */
+#workspaces {
+    padding: 0 4px 0 6px;
+}
+
+#workspaces button {
+    all: unset;
+    color: var(--fg-dim);
+    font-size: 14px;
+    padding: 0 5px;
+    border-radius: 999px;
+    min-width: 22px;
+    min-height: 30px;
+    transition: color 150ms ease, background 150ms ease;
+    cursor: pointer;
+}
+
+#workspaces button:hover {
+    color: var(--fg);
+    background: var(--bg-hover);
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+    color: var(--accent);
+    background: var(--bg-active);
+}
+
+#workspaces button.urgent {
+    color: var(--red);
+    animation: urgent-pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes urgent-pulse {
+    from { color: var(--red); }
+    to   { color: var(--orange); }
+}
+
+/* ── Window title ────────────────────────────────────── */
+#window {
+    color: var(--fg-dim);
+    padding: 0 10px 0 6px;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+#window:empty {
+    padding: 0;
+}
+
+/* ── Clock ───────────────────────────────────────────── */
+#clock {
+    color: var(--fg);
+    padding: 0 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    /* Two-line layout: time on top, date smaller below */
+    min-width: 130px;
+    text-align: center;
+}
+
+/* The Pango <span size='small'> in the format string handles
+   the date line — no extra selectors needed.             */
+
+/* ── Right-side module shared style ─────────────────── */
+#network,
+#bluetooth,
+#backlight,
+#power-profiles-daemon,
+#battery,
+#tray {
+    padding: 0 10px;
+    color: var(--fg);
+    border-radius: 999px;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+#network:hover,
+#bluetooth:hover,
+#backlight:hover,
+#power-profiles-daemon:hover,
+#battery:hover {
+    background: var(--bg-hover);
+}
+
+/* ── Network ─────────────────────────────────────────── */
+#network {
+    color: var(--accent);
+}
+
+#network.disconnected {
+    color: var(--fg-dim);
+}
+
+/* ── Bluetooth ───────────────────────────────────────── */
+#bluetooth {
+    color: var(--purple);
+}
+
+#bluetooth.off {
+    color: var(--fg-dim);
+}
+
+/* ── Brightness ──────────────────────────────────────── */
+#backlight {
+    color: var(--yellow);
+}
+
+/* ── Power profile ───────────────────────────────────── */
+#power-profiles-daemon {
+    color: var(--fg-dim);
+    font-size: 15px;
+    padding: 0 8px;
+}
+
+#power-profiles-daemon.performance {
+    color: var(--orange);
+}
+
+#power-profiles-daemon.balanced {
+    color: var(--accent);
+}
+
+#power-profiles-daemon.power-saver {
+    color: var(--green);
+}
+
+/* ── Battery ─────────────────────────────────────────── */
+#battery {
+    color: var(--green);
+}
+
+#battery.charging,
+#battery.plugged {
+    color: var(--accent2);
+}
+
+#battery.warning:not(.charging) {
+    color: var(--yellow);
+}
+
+#battery.critical:not(.charging) {
+    color: var(--red);
+    animation: blink-critical 1s linear infinite;
+}
+
+@keyframes blink-critical {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+}
+
+/* ── Tray ────────────────────────────────────────────── */
+#tray {
+    padding: 0 8px 0 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: var(--bg-active);
+    border-radius: 999px;
+}
+
+/* ── Tooltip ─────────────────────────────────────────── */
+tooltip {
+    background: var(--bg-pill);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--fg);
+    padding: 6px 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+tooltip label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--fg);
+}
